@@ -1,12 +1,10 @@
-#!/usr/bin/env python
-
 """Tests for `coredotcloud` package."""
 
 import pytest
 
 from click.testing import CliRunner
 
-from coredotcloud import coredotcloud
+# from coredotcloud import coredotcloud
 from coredotcloud import cli
 
 
