@@ -51,7 +51,7 @@ def get_seoul_time_now(is_datetime=0):
 
     Returns
     -------
-    datetime or time
+    datetime or time by `is_datetime`
 
     """
     t = get_datetime_now(add_hours=9)
