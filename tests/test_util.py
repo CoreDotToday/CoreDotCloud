@@ -6,6 +6,7 @@ from click.testing import CliRunner
 from coredotcloud.util import *
 
 import datetime
+from pytz import timezone
 
 
 def test_get_datetime_now():
@@ -28,3 +29,5 @@ def test_get_seoul_time_now():
     assert type(get_seoul_time_now()) == float
     assert get_seoul_time_now(is_datetime=1)
     assert type(get_seoul_time_now(is_datetime=1)) == datetime.datetime
+    assert datetime.datetime.now(
+        timezone('Asia/Seoul')).hour == get_seoul_time_now(is_datetime=1).hour
