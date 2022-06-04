@@ -11,3 +11,5 @@ Click==7.1.2
 pytest==6.2.4
 black==21.7b0
 boto3
+elasticsearch==7.17
+elastic-transport==7.16
