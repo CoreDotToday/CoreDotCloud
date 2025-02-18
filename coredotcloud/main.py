@@ -2,7 +2,7 @@ import os
 import sys
 import time
 import signal
-import multiprocessing
+import subprocess
 from coredotcloud.config import load_config
 from coredotcloud.collector import get_system_info, get_runtime_data
 from coredotcloud.sender import send_data
@@ -85,15 +85,18 @@ def start_daemon():
 
     print("[INFO] coredotcloud 데몬 시작...")
 
-    # daemon=True 제거
-    process = multiprocessing.Process(target=monitor)
-    process.start()
+    # `subprocess.Popen`을 사용하여 백그라운드 실행
+    process = subprocess.Popen([sys.executable, "-c", "from coredotcloud.main import monitor; monitor()"],
+                               stdout=open("/dev/null", "w"),
+                               stderr=open("/dev/null", "w"),
+                               stdin=open("/dev/null", "r"),
+                               start_new_session=True)
 
-    # 부모 프로세스가 종료되지 않도록 sleep 사용
+    write_pid(process.pid)
     time.sleep(1)
 
     if is_running():
-        print("[INFO] Daemon 실행 성공 (PID 저장됨)")
+        print(f"[INFO] Daemon 실행 성공 (PID {process.pid})")
     else:
         print("[ERROR] 데몬 실행 실패")
 

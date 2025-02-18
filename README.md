@@ -60,7 +60,13 @@ pip install coredotcloud
 API 키와 URL을 설정했는지 확인하세요.
 
 ```sh
-nano ~/.coredotcloud.json
+cat ~/.coredotcloud.json
+```
+
+또는 수정은 vi 등의 에디터를 사용하세요.
+
+```sh
+vi ~/.coredotcloud.json
 ```
 
 ### 2️⃣ **모니터링 실행**
@@ -76,7 +82,7 @@ coredotcloud stop    # 백그라운드 프로세스 종료
 #### **🔹 포그라운드에서 실행**
 
 ```sh
-coredotcloud run
+coredotcloud run     # 포그라운드에서 실행
 ```
 
 -   `start` → 백그라운드에서 실행 (PID 관리)
