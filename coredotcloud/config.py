@@ -9,7 +9,7 @@ def load_config():
     if not os.path.exists(CONFIG_FILE):
         default_config = {
             "API_URL": "https://API_URL/sentinel/v1",
-            "API_KEY": "API_KEY"
+            "API_KEY": "your-api-key"
         }
         with open(CONFIG_FILE, "w") as f:
             json.dump(default_config, f, indent=4)
