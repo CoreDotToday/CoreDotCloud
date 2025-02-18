@@ -74,21 +74,26 @@ vi ~/.coredotcloud.json
 #### **🔹 데몬 모드 실행**
 
 ```sh
-coredotcloud start   # 백그라운드에서 실행
-coredotcloud status  # 실행 상태 확인
-coredotcloud stop    # 백그라운드 프로세스 종료
+coredotcloud start         # 백그라운드에서 실행
+coredotcloud start -v      # 백그라운드에서 실행 (상세 로그 출력)
+coredotcloud status       # 실행 상태 확인
+coredotcloud stop        # 백그라운드 프로세스 종료
 ```
 
 #### **🔹 포그라운드에서 실행**
 
 ```sh
-coredotcloud run     # 포그라운드에서 실행
+coredotcloud run          # 포그라운드에서 실행
+coredotcloud run -v       # 포그라운드에서 실행 (상세 로그 출력)
 ```
+
+#### **🔹 명령어 옵션**
 
 -   `start` → 백그라운드에서 실행 (PID 관리)
 -   `stop` → 실행 중인 데몬 종료
 -   `status` → 실행 여부 확인
 -   `run` → 포그라운드에서 실행
+-   `-v`, `--verbose` → 상세 로그 출력 (데이터 전송 내용 포함)
 
 ---
 

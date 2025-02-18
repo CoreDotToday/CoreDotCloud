@@ -1,8 +1,18 @@
 import requests
+from datetime import datetime
 
 
-def send_data(category, api_url, api_key, data):
-    """API에 데이터를 리스트 형태로 전송"""
+def send_data(category, api_url, api_key, data, verbose=False):
+    """API에 데이터를 리스트 형태로 전송
+
+    Args:
+        category: 데이터 카테고리
+        api_url: API 엔드포인트 URL
+        api_key: API 인증 키
+        data: 전송할 데이터
+        verbose: 상세 로그 출력 여부 (기본값: False)
+    """
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     payload = {"a": api_key, "c": category, "d": data}
     headers = {"Content-Type": "application/json"}
 
@@ -10,7 +20,10 @@ def send_data(category, api_url, api_key, data):
         response = requests.post(
             api_url, json=payload, headers=headers, timeout=5)
         response.raise_for_status()
-        print(f"[SUCCESS] 데이터 전송 완료: {payload}")
+        if verbose:
+            print(f"[{current_time}] [SUCCESS] 데이터 전송 완료: {payload}")
+        else:
+            print(f"[{current_time}] [SUCCESS] 데이터 전송 완료")
     except requests.exceptions.ConnectionError:
         print(f"[ERROR] 서버 연결 실패: {api_url}에 연결할 수 없습니다. 네트워크 연결을 확인해주세요.")
     except requests.exceptions.Timeout:

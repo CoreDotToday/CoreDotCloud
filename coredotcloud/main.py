@@ -6,6 +6,7 @@ import subprocess
 from coredotcloud.config import load_config
 from coredotcloud.collector import get_system_info, get_runtime_data
 from coredotcloud.sender import send_data
+import argparse
 
 PID_FILE = "/tmp/coredotcloud.pid"
 
@@ -54,7 +55,7 @@ def stop_daemon():
     remove_pid()
 
 
-def monitor():
+def monitor(verbose=False):
     """시스템 모니터링 실행 (데몬)"""
     config = load_config()
     api_url = config["API_URL"]
@@ -70,14 +71,14 @@ def monitor():
     write_pid(os.getpid())
 
     # 🚀 최초 실행 시 전체 시스템 정보 전송
-    send_data("info", api_url, api_key, get_system_info())
+    send_data("info", api_url, api_key, get_system_info(), verbose=verbose)
 
     while True:
-        send_data("d", api_url, api_key, get_runtime_data())
+        send_data("d", api_url, api_key, get_runtime_data(), verbose=verbose)
         time.sleep(30)
 
 
-def start_daemon():
+def start_daemon(verbose=False):
     """데몬 시작"""
     if is_running():
         print("[ERROR] 이미 실행 중입니다.")
@@ -85,8 +86,11 @@ def start_daemon():
 
     print("[INFO] coredotcloud 데몬 시작...")
 
+    # verbose 옵션을 포함한 명령어 생성
+    cmd = f"from coredotcloud.main import monitor; monitor(verbose={verbose})"
+
     # `subprocess.Popen`을 사용하여 백그라운드 실행
-    process = subprocess.Popen([sys.executable, "-c", "from coredotcloud.main import monitor; monitor()"],
+    process = subprocess.Popen([sys.executable, "-c", cmd],
                                stdout=open("/dev/null", "w"),
                                stderr=open("/dev/null", "w"),
                                stdin=open("/dev/null", "r"),
@@ -103,14 +107,17 @@ def start_daemon():
 
 def main():
     """CLI 실행"""
-    if len(sys.argv) == 1:
-        print("사용법: coredotcloud [start|stop|status|run]")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description='coredotcloud 모니터링 도구')
+    parser.add_argument('command', choices=['start', 'stop', 'status', 'run'],
+                        help='실행할 명령어')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='상세 로그 출력')
 
-    command = sys.argv[1].lower()
+    args = parser.parse_args()
+    command = args.command.lower()
 
     if command == "start":
-        start_daemon()
+        start_daemon(args.verbose)
     elif command == "stop":
         stop_daemon()
     elif command == "status":
@@ -119,6 +126,6 @@ def main():
         else:
             print("[INFO] Daemon 실행 안됨")
     elif command == "run":
-        monitor()  # 포그라운드 실행
+        monitor(verbose=args.verbose)  # verbose 옵션 전달
     else:
-        print("사용법: coredotcloud [start|stop|status|run]")
+        parser.print_help()
