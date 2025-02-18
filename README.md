@@ -80,6 +80,46 @@ COREDOTCLOUD는 **불필요한 데이터 크기를 줄이기 위해 리스트(JS
 
 ### **API 요청 예시**
 
+-   시스템 정보 데이터
+
+```json
+{
+    "apikey": "DKWs8wl",
+    "category": "info",
+    "data": {
+        "hostname": "server-01",
+        "os": "Linux",
+        "os_version": "5.15.0-56-generic",
+        "architecture": "x86_64",
+        "cpu": {
+            "model": "Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz",
+            "physical_cores": 8,
+            "logical_cores": 16,
+            "frequency_mhz": 2300.0,
+            "cpu_percent": 5.3
+        },
+        "memory": {
+            "total_gb": 64.0,
+            "available_gb": 50.5,
+            "used_gb": 13.5,
+            "usage_percent": 21.1
+        },
+        "disk": [...],
+        "network": {...},
+        "gpu": [
+            {
+                "name": "NVIDIA Tesla V100",
+                "load_percent": 12.5,
+                "memory_total_mb": 16384,
+                "memory_used_mb": 4096,
+                "memory_free_mb": 12288,
+                "temperature": 65.0
+            }
+        ]
+    }
+}
+```
+
 -   예시: CPU 4개, GPU 없음
 
 ```json
