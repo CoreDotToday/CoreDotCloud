@@ -17,20 +17,10 @@ def main():
     print("[INFO] 시스템 모니터링 시작...")
 
     # 🚀 최초 실행 시 전체 시스템 정보 전송
-    initial_data = {
-        "a": api_key,
-        "c": "info",
-        "d": get_system_info()
-    }
-    send_data(api_url, api_key, initial_data)
+    send_data("info", api_url, api_key, get_system_info())
 
     while True:
-        runtime_data = {
-            "a": api_key,
-            "c": "d",
-            "d": get_runtime_data()
-        }
-        send_data(api_url, api_key, runtime_data)
+        send_data("data", api_url, api_key, get_runtime_data())
         time.sleep(30)
 
 

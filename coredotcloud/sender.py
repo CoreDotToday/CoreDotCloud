@@ -1,9 +1,9 @@
 import requests
 
 
-def send_data(api_url, api_key, data):
+def send_data(category, api_url, api_key, data):
     """API에 데이터를 리스트 형태로 전송"""
-    payload = {"apikey": api_key, "data": data}
+    payload = {"a": api_key, "c": category, "d": data}
     headers = {"Content-Type": "application/json"}
 
     try:
