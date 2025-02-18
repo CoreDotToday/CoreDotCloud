@@ -62,7 +62,7 @@ def get_system_data():
         rx_speed,      # 네트워크 수신 속도 (KB/s)
         tx_speed,      # 네트워크 송신 속도 (KB/s)
         cpu_count,     # CPU 개수
-        *per_cpu_usage,  # 개별 CPU 사용률 리스트
         gpu_count,     # GPU 개수
-        *gpu_data      # GPU 사용률 및 메모리 리스트
+        *per_cpu_usage,  # 개별 CPU 사용률 리스트
+        *gpu_data      # GPU 사용률 및 VRAM 정보 리스트
     ]
