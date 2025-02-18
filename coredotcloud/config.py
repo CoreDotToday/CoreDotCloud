@@ -8,7 +8,7 @@ def load_config():
     """설정 파일을 로드합니다. 존재하지 않으면 생성합니다."""
     if not os.path.exists(CONFIG_FILE):
         default_config = {
-            "API_URL": "https://API_URL/sentinel/v1",
+            "API_URL": "https://mon.core.today/sentinel/v1",
             "API_KEY": "your-api-key"
         }
         with open(CONFIG_FILE, "w") as f:

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="coredotcloud",
-    version="0.7.5",
+    version="0.7.6",
     packages=find_packages(),
     install_requires=["psutil", "requests", "gputil"],
     entry_points={
