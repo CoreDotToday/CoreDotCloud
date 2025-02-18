@@ -10,12 +10,12 @@ setup(
             "coredotcloud=coredotcloud.main:main"
         ]
     },
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="CoreDotToday",
+    author_email="dev@core.today",
     description="A simple system monitoring tool for CoreDotCloud",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/coredotcloud",
+    url="https://github.com/coredottoday/coredotcloud",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
