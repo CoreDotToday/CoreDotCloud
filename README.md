@@ -40,7 +40,7 @@ pip install coredotcloud
 
 ```json
 {
-    "API_URL": "https://mon.core.today/sentinel",
+    "API_URL": "https://mon.core.today/sentinel/v1",
     "API_KEY": "DKWs8wl"
 }
 ```
