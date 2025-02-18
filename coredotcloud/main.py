@@ -10,10 +10,10 @@ from coredotcloud.sender import send_data
 PID_FILE = "/tmp/coredotcloud.pid"
 
 
-def write_pid():
+def write_pid(pid):
     """현재 프로세스의 PID를 파일에 저장"""
     with open(PID_FILE, "w") as f:
-        f.write(str(os.getpid()))
+        f.write(str(pid))
 
 
 def remove_pid():
@@ -67,7 +67,7 @@ def monitor():
     print("[INFO] coredotcloud 데몬 실행 중...")
 
     # PID 기록
-    write_pid()
+    write_pid(os.getpid())
 
     # 🚀 최초 실행 시 전체 시스템 정보 전송
     send_data("info", api_url, api_key, get_system_info())
@@ -84,8 +84,18 @@ def start_daemon():
         sys.exit(1)
 
     print("[INFO] coredotcloud 데몬 시작...")
-    process = multiprocessing.Process(target=monitor, daemon=True)
+
+    # daemon=True 제거
+    process = multiprocessing.Process(target=monitor)
     process.start()
+
+    # 부모 프로세스가 종료되지 않도록 sleep 사용
+    time.sleep(1)
+
+    if is_running():
+        print("[INFO] Daemon 실행 성공 (PID 저장됨)")
+    else:
+        print("[ERROR] 데몬 실행 실패")
 
 
 def main():
@@ -102,7 +112,7 @@ def main():
         stop_daemon()
     elif command == "status":
         if is_running():
-            print("[INFO] Daemon 실행 중")
+            print(f"[INFO] Daemon 실행 중 (PID {read_pid()})")
         else:
             print("[INFO] Daemon 실행 안됨")
     elif command == "run":
