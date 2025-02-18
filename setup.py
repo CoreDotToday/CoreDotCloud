@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name="coredotcloud",
-    version="0.6.3",
+    version="0.6.4",
     packages=find_packages(),
-    install_requires=["psutil", "requests"],
+    install_requires=["psutil", "requests", "gputil"],
     entry_points={
         "console_scripts": [
             "coredotcloud=coredotcloud.main:main"
