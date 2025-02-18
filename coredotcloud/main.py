@@ -20,7 +20,7 @@ def main():
     send_data("info", api_url, api_key, get_system_info())
 
     while True:
-        send_data("data", api_url, api_key, get_runtime_data())
+        send_data("d", api_url, api_key, get_runtime_data())
         time.sleep(30)
 
 
