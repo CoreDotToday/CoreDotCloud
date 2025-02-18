@@ -107,3 +107,6 @@ ENV/
 
 # User custom file
 custom/
+
+# PyPI configuration
+.pypirc
