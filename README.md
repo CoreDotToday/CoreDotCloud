@@ -11,6 +11,7 @@ CoreDotCloud is a lightweight system monitoring tool that collects CPU, memory, 
 -   **다중 CPU & 다중 GPU 장비 지원**
 -   **설정 파일 (`~/.coredotcloud.json`)을 통해 API 정보 관리**
 -   **30초마다 자동으로 데이터 수집 및 전송**
+-   **데몬 모드 지원 (`start`, `stop`, `status`, `run`)**
 -   **가볍고 빠른 리스트 기반 JSON 데이터 구조**
 -   **Python 3.7 이상 지원**
 
@@ -62,14 +63,26 @@ API 키와 URL을 설정했는지 확인하세요.
 nano ~/.coredotcloud.json
 ```
 
-### 2️⃣ **모니터링 시작**
+### 2️⃣ **모니터링 실행**
+
+#### **🔹 데몬 모드 실행**
 
 ```sh
-coredotcloud
+coredotcloud start   # 백그라운드에서 실행
+coredotcloud status  # 실행 상태 확인
+coredotcloud stop    # 백그라운드 프로세스 종료
 ```
 
--   30초마다 시스템 데이터를 수집하여 API로 전송합니다.
--   **중지하려면** `Ctrl + C` 를 누르세요.
+#### **🔹 포그라운드에서 실행**
+
+```sh
+coredotcloud run
+```
+
+-   `start` → 백그라운드에서 실행 (PID 관리)
+-   `stop` → 실행 중인 데몬 종료
+-   `status` → 실행 여부 확인
+-   `run` → 포그라운드에서 실행
 
 ---
 
@@ -79,6 +92,43 @@ COREDOTCLOUD는 **불필요한 데이터 크기를 줄이기 위해 리스트(JS
 백엔드에서 **인덱스를 기반으로 데이터 항목을 해석**할 수 있습니다.
 
 ### **API 요청 예시**
+
+-   **시스템 정보 데이터 (`info`)**
+
+```json
+{
+    "apikey": "DKWs8wl",
+    "category": "info",
+    "data": {
+        "hostname": "server-01",
+        "os": "Linux",
+        "os_version": "5.15.0-56-generic",
+        "architecture": "x86_64",
+        "cpu": { ... },
+        "memory": { ... },
+        "disk": [...],
+        "network": {...},
+        "gpu": [{ ... }]
+    }
+}
+```
+
+-   **정기 데이터 (`data`)**
+
+```json
+{
+    "apikey": "DKWs8wl",
+    "category": "data",
+    "data": [
+        6,  # CPU 개수
+        2,  # GPU 개수
+        10.0, 15.0, 12.0, 18.0, 22.0, 17.0,  # CPU 사용률
+        40.5, 8192, 2048,  # GPU 0 사용률 및 VRAM
+        55.2, 4096, 1024,  # GPU 1 사용률 및 VRAM
+        500.0, 100.0  # 네트워크 속도
+    ]
+}
+```
 
 -   시스템 정보 데이터
 
@@ -177,8 +227,6 @@ COREDOTCLOUD는 **불필요한 데이터 크기를 줄이기 위해 리스트(JS
     ]
 }
 ```
-
----
 
 ## 🖥️ **수집하는 시스템 정보**
 
