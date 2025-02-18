@@ -143,10 +143,14 @@ def get_runtime_data():
         gpus = GPUtil.getGPUs()
         gpu_count = len(gpus)
         for gpu in gpus:
+            # GPU 온도를 안전하게 가져옴 (속성이 없거나 None인 경우 0으로 처리)
+            temperature = getattr(gpu, 'temperature', 0) or 0
+
             gpu_data.extend([
                 gpu.load * 100,            # GPU 사용률 (%)
                 round(gpu.memoryTotal, 2),  # 총 VRAM (MB)
-                round(gpu.memoryUsed, 2)   # 사용 중인 VRAM (MB)
+                round(gpu.memoryUsed, 2),   # 사용 중인 VRAM (MB)
+                temperature            # GPU 온도 (°C)
             ])
     else:
         gpu_count = 0
